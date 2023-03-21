@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSP 프로젝트</title>
+  </head>
+  <body>
+    <h3>JSP 테스트 1</h3>
+    <!-- 
+        로그인
+        user01/ pass01! 로그인 시 성공
+     -->
+    <!-- action= /프로젝트명/서비스요청주소 method= 데이터전달방식: post/get -->
+    <form action="/JSPProject1/login" method="post">
+      ID : <input type="text" name="inputId" /> pw :
+      <input type="password" name="inputPw" />
+      <button>로그인</button>
+    </form>
+    <hr>
+    <h3>JSP 테스트 2</h3>
+
+    <form action="/JSPProject1/pizzaOrder"method="post">
+      피자 선택(1만원) : 
+      <select name="pizza">
+        <option>콤비네이션 피자</option>
+        <option>고구마 피자</option>
+        <option>쉬림프 피자</option>
+        <option>하와이안 피자</option>
+        <option>불고기 피자</option>
+      </select>
+      <br><br>
+      사이즈
+      <br>
+      <label>
+        R <input type="radio" name="size" value="R">
+      </label>
+      <br>
+      <label for="">
+        L <input type="radio" name="size" value="L">
+      </label>
+      <br><br>
+
+      수량 : <input type="number" name="amount" min="1"max="10"value="1">
+
+      <br><br>
+      <button>주문하기</button>
+    </form>
+    <hr>
+    <h3>회원 가입(JSP 버전)</h3>
+    <form action="/JSPProject1/login2"method="POST">
+      <table>
+        <tr>
+          <th name="id">아이디</th>
+          <td name="idInput"><input type="text" name="inputId"></td>
+        </tr>
+        <tr>
+          <th name="pw">비밀번호</th>
+          <td name="pwInput"><input type="password" name="inputPw"></td>
+        </tr>
+        <tr>
+          <th name="pw">비밀번호 확인</th>
+          <td name="pwInput"><input type="password" name="inputPw"></td>
+        </tr>
+        <tr>
+          <th name="name">이름</th>
+          <td name="nameInput"><input type="text" name="inputName"></td>
+        </tr>
+        <tr>
+          <th name="email">이메일</th>
+          <td name="emailInput2"><input type="email" name="inputEmail"></td>
+        </tr>
+        <tr>
+          <th name="hobby">취미</th>
+          <td name="Inputhobby">
+            공부<input type="checkbox" name="inputhobby" value="study">
+            게임<input type="checkbox" name="inputhobby" value="game">
+            헬스<input type="checkbox" name="inputhobby"value="health"><br>
+            독서<input type="checkbox" name="inputhobby"value="reading">
+            영화<input type="checkbox" name="inputhobby"value="movie">
+            코딩<input type="checkbox" name="inputhobby"value="coding">
+          </td>
+          
+        </tr>
+        <tr>
+          <td><button>회원가입</button></td>
+        </tr>
+      </table>
+    </form>
+    
+  </body>
+</html>

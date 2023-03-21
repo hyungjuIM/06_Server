@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSP 전용 언어/태그</title>
+</head>
+<body>
+<ul>
+	<li>
+		<!-- form태그를 제외한 모든 요청 방식은 GET -->
+		<a href="/JSPProject2/elTest">1. EL(Expression Language)</a>
+				<!-- 절대 경로 방식(어디서 접근하던 JSPProject에서 시작되기 때문) -->
+	</li>
+</ul>
+    
+</body>
+</html>
