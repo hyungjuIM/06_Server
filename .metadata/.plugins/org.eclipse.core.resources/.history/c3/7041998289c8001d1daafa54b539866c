@@ -1,0 +1,21 @@
+package edu.kh.jsp.student.model.service;
+
+import java.sql.Connection;
+import java.util.List;
+
+import static edu.kh.jsp.common.JDBCTemplate.*;
+
+import edu.kh.jsp.student.model.dao.StudentDao;
+import edu.kh.jsp.student.model.vo.Student;
+
+public class StudentService {
+	private StudentDao dao = new StudentDao();
+public List<Student> selectAll(){
+	Connection conn = getConnection();
+	
+	// dao 메서드 호출 후 결과 반환 받기
+	List<Student> stdList = dao.selectAll(conn);
+	
+	return null;
+}
+}

@@ -1,0 +1,15 @@
+package edu.kh.jsp.student.model.dao;
+
+import java.sql.Connection;
+import java.util.List;
+
+import edu.kh.jsp.student.model.vo.Student;
+
+public class StudentDao {
+
+	public List<Student> selectAll(Connection conn) {
+
+		return null;
+	}
+
+}

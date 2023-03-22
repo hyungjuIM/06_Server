@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학과조회</title>
+</head>
+<body>
+    <table border ="1">
+    	<tr>
+    		<th style="color:white; background-color:black;">학번</th>
+    		<th style="color:white; background-color:black;">이름</th>
+    		<th style="color:white; background-color:black;">학과</th>
+    		<th style="color:white; background-color:black;">주소</th>
+    	</tr>
+    	<c:forEach var="student" items="${stdList2}">
+    		<c:if test="${dpname.equals(student.departmentName)}">
+   				<tr>
+   					<td>${student.studentNo}</td>
+   					<td>${student.studentName}</td>
+   					<td>${student.departmentName}</td>
+   					<td>${student.studentAddress}</td>
+   					
+   				</tr>
+   				</c:if>
+   		</c:forEach>
+    </table>
+</body>
+</html>

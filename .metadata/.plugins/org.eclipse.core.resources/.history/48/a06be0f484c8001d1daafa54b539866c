@@ -1,0 +1,48 @@
+package edu.kh.jsp.common;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.util.Properties;
+
+public class JDBCTemplate {
+	/*
+	 * DB 연결(Connection 생성), 자동 커밋 off 트랜잭션 제어, JDBC 객체 자원반환(close)
+	 * 
+	 * 이러한 JDBC에서 반복 사용되는 코드를 모아둔 클래스
+	 * 
+	 * *모든 필드, 메서드가 static* -> 어디서든지 클래스명.필드명/클래스명.메서드명 호출가능(별도 객체 생성x)
+	 * 
+	 */
+
+	private static Connection conn = null;
+	// -> static 메서드에서 필드를 사용하기 위해서는
+	// 필드도 static필드여야 한다.
+
+	// alt+shift+j :메소드용 주석
+	/**
+	 * DB연결 정보를 담고 있는 Connection객체 생성 및 반환 메서드
+	 * 
+	 * @return conn
+	 */
+	public static Connection getConnection() {
+
+		try {
+
+			if (conn == null || conn.isClosed()) {
+				Properties prop = new Properties();
+				// MAP<String, string>형태의 객체, XML 입출력 특화
+				
+				String filePath
+				= JDBCTemplate.class.getResource("/edu/kh/jsp/sql/driver.xml").getPath();
+				
+				prop.loadFromXML(new FileInputStream(filePath));
+			}
+
+		} catch (Exception e) {
+			System.out.println("[Connection 생성중 예외 발생]");
+			e.printStackTrace();
+		}
+
+		return conn;
+	}
+}

@@ -1,0 +1,38 @@
+package edu.kh.jsp.student.model.dao;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Properties;
+
+import edu.kh.jsp.student.model.vo.Student;
+
+public class StudentDao {
+	
+	private Statement stmt;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private Properties prop;
+
+	//기본 생성자
+	public StudentDao() {
+		try {
+			String filePath = StudentDao.class.getResource("/edu/kh/jsp/sql/student-sql.xml").getPath();
+			
+			prop = new Properties();
+			
+			prop.loadFromXML(new FileInputStream(filePath));
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public List<Student> selectAll(Connection conn) {
+
+		return null;
+	}
+
+}
