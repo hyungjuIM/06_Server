@@ -1,0 +1,206 @@
+package edu.kh.community.common;
+
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class JDBCTemplate {
+	/*
+	 * DB 연결(Connection 생성), 자동 커밋 off 트랜잭션 제어, JDBC 객체 자원반환(close)
+	 * 
+	 * 이러한 JDBC에서 반복 사용되는 코드를 모아둔 클래스
+	 * 
+	 * *모든 필드, 메서드가 static* -> 어디서든지 클래스명.필드명/클래스명.메서드명 호출가능(별도 객체 생성x)
+	 * 
+	 */
+
+	private static Connection conn = null;
+	// -> static 메서드에서 필드를 사용하기 위해서는
+	// 필드도 static필드여야 한다.
+
+	// alt+shift+j :메소드용 주석
+	/**
+	 * DB연결 정보를 담고 있는 Connection객체 생성 및 반환 메서드
+	 * 
+	 * @return conn
+	 */
+	public static Connection getConnection() {
+
+		try {
+			
+			// JNDI(Java Naming and Directory Interface API
+			// - 디렉토리에 접근하는데 사용하는 Java API
+			// - 애플리케이션(프로그램, 웹앱)은 JNDI를 이용해서 파일 또는 서버 Resource를 찾을 수 있음
+			
+			Context initContext = new InitialContext();
+			
+			// servers -> context.xml파일 찾기
+			Context envContext =(Context)initContext.lookup("java:/comp/env");
+			
+			// DBCP 세팅의 <Resource>태그를 찾아서 DataSource 형식의 객체로 얻어오기
+			// DataSource : Connection Pool을 구현하는 객체(만들어둔 Connection 얻어오기 가능)
+			DataSource ds = (DataSource)envContext.lookup("jdbc/oracle");
+			
+			conn = ds.getConnection();
+			
+			conn.setAutoCommit(false);
+			
+
+		} catch (Exception e) {
+			System.out.println("[Connection 생성중 예외 발생]");
+			e.printStackTrace();
+		}
+
+		return conn;
+	}
+	/** Connection 객체 자원 반환 메서드
+	 * @param conn
+	 */
+	public static void close(Connection conn2) {
+		try{
+			if(conn != null && !conn.isClosed()) conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/** Statement(부모), PreparedStatement(자식) 객체 자원 반환 메서드
+	 * 다형성 / 동적 바인딩
+	 * @param conn
+	 */
+	public static void close(Statement stmt) {
+		try{
+			if(stmt != null && !stmt.isClosed()) stmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/** ResultSet 객체 자원 반환 메서드
+	 * @param conn
+	 */
+	public static void close(ResultSet rs) {
+		try{
+			if(rs != null && !rs.isClosed()) rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void commit(Connection conn) {
+		try {
+			if(conn !=null && !conn.isClosed()) conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void rollback(Connection conn) {
+		try {
+			if(conn !=null && !conn.isClosed()) conn.rollback();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static Connection conn2 = null;
+	// -> static 메서드에서 필드를 사용하기 위해서는
+	// 필드도 static필드여야 한다.
+
+	// alt+shift+j :메소드용 주석
+	/**
+	 * DB연결 정보를 담고 있는 Connection객체 생성 및 반환 메서드
+	 * 
+	 * @return conn
+	 */
+	public static Connection getConnection2() {
+
+		try {
+
+			if (conn2 == null || conn2.isClosed()) {
+				Properties prop2 = new Properties();
+				// MAP<String, string>형태의 객체, XML 입출력 특화
+				
+				String filePath
+				= JDBCTemplate.class.getResource("/edu/kh/jsp/sql/driver.xml").getPath();
+				
+				//driver.xml 파일 읽어오기
+				prop2.loadFromXML(new FileInputStream(filePath));
+				//XML파일에 작성된 내용이 Properties 객체에 모두 저장됨
+				
+				// XML에서 읽어온 값을 모두 String 변수에 저장
+				String driver = prop2.getProperty("driver");
+				String url = prop2.getProperty("url");
+				String user = prop2.getProperty("user");
+				String password = prop2.getProperty("password");
+				
+				//커넥션 생성
+				Class.forName(driver);
+				
+				// DriverManager를 이용해 Connection 객체 생성
+				conn2 = DriverManager.getConnection(url,user,password);
+				
+				//자동 커밋 비활성화
+				conn2.setAutoCommit(false);
+			}
+
+		} catch (Exception e) {
+			System.out.println("[Connection 생성중 예외 발생]");
+			e.printStackTrace();
+		}
+
+		return conn2;
+	}
+	/** Connection 객체 자원 반환 메서드
+	 * @param conn
+	 */
+	public static void close2(Connection conn2) {
+		try{
+			if(conn2 != null && !conn2.isClosed()) conn2.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/** Statement(부모), PreparedStatement(자식) 객체 자원 반환 메서드
+	 * 다형성 / 동적 바인딩
+	 * @param conn
+	 */
+	public static void close2(Statement stmt2) {
+		try{
+			if(stmt2 != null && !stmt2.isClosed()) stmt2.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/** ResultSet 객체 자원 반환 메서드
+	 * @param conn
+	 */
+	public static void close2(ResultSet rs2) {
+		try{
+			if(rs2 != null && !rs2.isClosed()) rs2.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void commit2(Connection conn2) {
+		try {
+			if(conn2 !=null && !conn2.isClosed()) conn2.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void rollback2(Connection conn2) {
+		try {
+			if(conn2 !=null && !conn2.isClosed()) conn2.rollback();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+}

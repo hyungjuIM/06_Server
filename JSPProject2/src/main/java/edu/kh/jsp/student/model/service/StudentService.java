@@ -22,10 +22,15 @@ public List<Student> selectAll() throws Exception{
 	return stdList;
 }
 
-public List<Student> selectdp() throws Exception{
-	Connection conn2 = getConnection();
-	List<Student> stdList2 = dao.selectdp(conn2);
-	close(conn2);
-	return stdList2;
+
+public List<Student> selectDepartment(String inputDept) throws Exception{
+	
+	Connection conn = getConnection();
+	
+	List<Student> stdList = dao.selectDepartment(conn, inputDept);
+	
+	close(conn);
+	
+	return stdList;
 }
 }
