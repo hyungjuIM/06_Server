@@ -103,4 +103,79 @@ public class MemberDAO {
 		return loginMember; // 조회 결과 없으면 null, 있으면 Member객체 주소
 	}
 
+	/** email중복검사 dao
+	 * @param conn
+	 * @param memberEmail
+	 * @return
+	 */
+	public int emailDupCheck(Connection conn, String memberEmail) throws Exception {
+		
+		// 결과 저장용 변수선언
+		int result = 0;
+		
+		try {
+			// sql얻어오기
+			String sql = prop.getProperty("emailDupCheck");
+			
+			// pstmt 생성 -> 플레이스홀드 있으면 사용
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberEmail);
+			
+			// sql실행후 결과 반환받기
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	/** 인증번호 발급일 수정 DAO
+	 * @param conn
+	 * @param inputEmail
+	 * @param cNumber
+	 * @return
+	 */
+	public int updateCertification(Connection conn, String inputEmail, String cNumber) throws Exception{
+		int result =0;
+		try {
+			String sql =prop.getProperty("updateCertification");
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, cNumber);
+			pstmt.setString(2, inputEmail);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+
+	/** 인증번호 생성 DAO
+	 * @param conn
+	 * @param inputEmail
+	 * @param cNumber
+	 * @return
+	 */
+	public int insertCertification(Connection conn, String inputEmail, String cNumber) throws Exception {
+		int result =0;
+		try {
+			String sql= prop.getProperty("insertCertification");
+			pstmt =conn.prepareStatement(sql);
+			
+			pstmt.setString(1, inputEmail);
+			pstmt.setString(2, cNumber);
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

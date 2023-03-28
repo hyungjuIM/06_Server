@@ -38,4 +38,46 @@ public class MemberService {
 		return loginMember;
 	}
 
+	/** 이메일 중복검사 Service
+	 * @param memberEmail
+	 * @return
+	 * @throws Exception 
+	 */
+	public int emailDupCheck(String memberEmail) throws Exception {
+		//커넥션 생성
+		Connection conn = getConnection();
+		
+		//dao에 전달
+		int result =dao.emailDupCheck(conn,memberEmail);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	/** 인증번호 DB추가 service
+	 * @param inputEmail
+	 * @param cNumber
+	 * @return
+	 * @throws Exception 
+	 */
+	public int insertCertification(String inputEmail, String cNumber) throws Exception {
+		Connection conn = getConnection();
+		// 1) 입력한 이메일과 일치하는 값이 있으면 수정(UPDATE)
+		int result = dao.updateCertification(conn, inputEmail, cNumber);
+		// 2) 일치하는 이메일이 없는 경우 -> 처음으로 인증번호를 발급받음 -> 삽입(insert)
+		if(result ==0) {
+			result = dao.insertCertification(conn, inputEmail, cNumber);
+			
+		}
+		// 트랜잭션 제어(DML일때)
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	
+
 }

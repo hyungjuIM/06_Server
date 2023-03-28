@@ -28,5 +28,19 @@
 		AND MEMBER_PW = ?
 		AND SECESSION_FL = 'N'
 	</entry>
+	<entry key="emailDupCheck">	
+		SELECT COUNT(*) FROM MEMBER 
+		WHERE MEMBER_EMAIL = ?
+		AND SECESSION_FL = 'N'
+	</entry>
+	<entry key="updateCertification">	
+		UPDATE CERTIFICATION SET 
+		C_NUMBER = ?,
+		ISSUE_DT = SYSDATE 
+		WHERE EMAIL =?
+	</entry>
+	<entry key="insertCertification">			
+		INSERT INTO CERTIFICATION VALUES(?,?,SYSDATE)
+	</entry>
 
 </properties>

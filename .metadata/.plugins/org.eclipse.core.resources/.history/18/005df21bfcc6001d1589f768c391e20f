@@ -1,9 +1,0 @@
-package edu.kh.jsp.controller;
-
-@WebServlet("/pizzaOrder")
-public class PizzaOrderServlet {
-	public class PizzaOrderServlet extends HttpServlet{
-		
-	}
-
-}

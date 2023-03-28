@@ -115,9 +115,14 @@
 								저장
 							</label>
 
-
+							<!-- 
+								WEB-INF 폴더는 외부로 부터 직접적으로 요청할 수 없는 폴더
+								왜? 중요한 코드(설정관련, 자바..)가 위치하는 폴더로서
+								외부로부터 접근을 차단하기 위해서
+								-> 대신 Servlet을 이용해서 내부 접근(forward) 가능
+							 -->
 							<article id="signUp-find-area">
-								<a href="#">회원가입</a>
+								<a href="${contextPath}/member/signUp">회원가입</a>
 								 <span>|</span> 
 								 <a href="#">ID/PW찾기</a>
 							</article>

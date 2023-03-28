@@ -1,5 +1,20 @@
 package edu.kh.community.member.model.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+// Lombok 라이브러리
+// - VO(Value Object) 또는 DTO(Data Transfer Object)
+// 에 작성되는 공통 코드 (getter, setter, 생성자)를 자동 추가해주는 라이브러리
+
+@Getter // getter 자동추가
+@Setter // setter 자동추가
+@ToString // ToString 자동추가
+@NoArgsConstructor // 기본생성자
+@AllArgsConstructor //모든 필드 초기화하는 매개변수 생성자
 public class Member {
 	private int memberNo;
 	private String memberEmail;
@@ -11,24 +26,7 @@ public class Member {
 	private String enrollDate;
 	private String secessionFlag;
 	
-	public Member() {
-		
-	}
-
-	public Member(int memberNo, String memberEmail, String memberPw, String memberNickname, String memberTel,
-			String memberAddress, String profileImage, String enrollDate, String secessionFlag) {
-		super();
-		this.memberNo = memberNo;
-		this.memberEmail = memberEmail;
-		this.memberPw = memberPw;
-		this.memberNickname = memberNickname;
-		this.memberTel = memberTel;
-		this.memberAddress = memberAddress;
-		this.profileImage = profileImage;
-		this.enrollDate = enrollDate;
-		this.secessionFlag = secessionFlag;
-	}
-
+	
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -100,13 +98,8 @@ public class Member {
 	public void setSecessionFlag(String secessionFlag) {
 		this.secessionFlag = secessionFlag;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "Member [memberNo=" + memberNo + ", memberEmail=" + memberEmail + ", memberPw=" + memberPw
-				+ ", memberNickname=" + memberNickname + ", memberTel=" + memberTel + ", memberAddress=" + memberAddress
-				+ ", profileImage=" + profileImage + ", enrollDate=" + enrollDate + ", secessionFlag=" + secessionFlag
-				+ "]";
-	}
+	
 	
 }
